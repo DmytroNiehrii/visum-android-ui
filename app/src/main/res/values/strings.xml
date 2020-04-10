@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Visum</string>
+    <string name="user_name">spot@catchat.com</string>
+
+    <!--Content fragments-->
+    <string name="public_groups_fragment">Public groups</string>
+    <string name="my_groups_fragment">Drafts</string>
+    <string name="group_fragment">Sent items</string>
+
+    <!--Navigation Panel-->
+    <string name="nav_public_groups">Public groups</string>
+    <string name="nav_my_groups">My groups</string>
+    <string name="nav_inbox">Inbox</string>
+
+    <string name="nav_support">Support</string>
+
+    <string name="nav_help">Help</string>
+    <string name="nav_feedback">Give us feedback</string>
+
+    <!--Burger-->
+    <string name="nav_open_drawer">Open navigation drawer</string>
+    <string name="nav_close_drawer">Close navigation drawer</string>
+
+    <!--Activities-->
+    <string name="new_group">Create a new group</string>
+    <string name="new_vote">Add a new vote</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
