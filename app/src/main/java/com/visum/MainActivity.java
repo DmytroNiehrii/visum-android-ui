@@ -13,7 +13,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import com.visum.community.CommunityContent;
+
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CommunityFragment.OnListFragmentInteractionListener
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
         Intent intent = null;
         switch (menuItem.getItemId()) {
-            case R.id.nav_public_groups:
-                //fragment = PublicGroupsFragment.newInstance();
-                //fragment = VoteFragment.newInstance(1);
+            case R.id.nav_public_community:
+                fragment = CommunityFragment.newInstance(1);
                 break;
             case R.id.nav_my_groups:
                 //fragment = SentItemsFragment.newInstance();
@@ -84,5 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onListFragmentInteraction(CommunityContent.CommunityItem item) {
+        System.out.println(String.format("Item '%s' iterated", item.content));
     }
 }
