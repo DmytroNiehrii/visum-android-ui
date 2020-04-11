@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.visum.community.CommunityContent;
+import com.visum.dto.OutCommunityDto;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(CommunityContent.CommunityItem item) {
+    public void onListFragmentInteraction(OutCommunityDto item) {
         System.out.println(String.format("Item '%s' iterated", item.name));
     }
 }

@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.visum.community.CommunityContent;
-import com.visum.community.CommunityContent.CommunityItem;
+import com.visum.community.CommunityRecyclerViewAdapter;
+import com.visum.dto.OutCommunityDto;
+//import com.visum.community.CommunityContent.CommunityItem;
 
 /**
  * A fragment representing a list of Items.
@@ -107,6 +109,6 @@ public class CommunityFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(CommunityItem item);
+        void onListFragmentInteraction(OutCommunityDto item);
     }
 }

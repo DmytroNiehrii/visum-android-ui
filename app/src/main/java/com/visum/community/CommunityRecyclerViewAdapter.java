@@ -1,4 +1,4 @@
-package com.visum;
+package com.visum.community;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -9,16 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.visum.CommunityFragment.OnListFragmentInteractionListener;
-import com.visum.community.CommunityContent;
-import com.visum.community.CommunityContent.CommunityItem;
+import com.visum.R;
+import com.visum.dto.OutCommunityDto;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link CommunityItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<CommunityRecyclerViewAdapter.ViewHolder> {
 
     private final OnListFragmentInteractionListener mListener;
@@ -35,10 +30,10 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        List<CommunityItem> mValues = CommunityContent.getInstance().getItems();
+        List<OutCommunityDto> mValues = CommunityContent.getInstance().getItems();
         holder.mItem = mValues.get(position);
-        holder.vName.setText(mValues.get(position).id);
-        holder.vDescription.setText(mValues.get(position).name);
+        holder.vName.setText( holder.mItem.name);
+        holder.vDescription.setText(mValues.get(position).description);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +57,7 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
         private final CardView cardView;
         public final TextView vName;
         public final TextView vDescription;
-        public CommunityItem mItem;
+        public OutCommunityDto mItem;
 
         public ViewHolder(@NonNull CardView view) {
             super(view);
