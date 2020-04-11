@@ -92,6 +92,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(CommunityContent.CommunityItem item) {
-        System.out.println(String.format("Item '%s' iterated", item.content));
+        System.out.println(String.format("Item '%s' iterated", item.name));
     }
 }

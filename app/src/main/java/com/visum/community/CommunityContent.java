@@ -16,7 +16,7 @@ public class CommunityContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<CommunityItem> ITEMS = new ArrayList<CommunityItem>();
+    private static final List<CommunityItem> ITEMS = new ArrayList<CommunityItem>();
 
     /**
      * A map of sample (dummy) items, by ID.
@@ -28,7 +28,7 @@ public class CommunityContent {
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
+            addItem(createCommunityItem(i));
         }
     }
 
@@ -37,7 +37,7 @@ public class CommunityContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    private static CommunityItem createDummyItem(int position) {
+    private static CommunityItem createCommunityItem(int position) {
         return new CommunityItem(String.valueOf(position), "Item " + position, makeDetails(position));
     }
 
@@ -50,23 +50,27 @@ public class CommunityContent {
         return builder.toString();
     }
 
+    public static List<CommunityItem> getItems() {
+        return ITEMS;
+    }
+
     /**
      * A dummy item representing a piece of content.
      */
     public static class CommunityItem {
         public final String id;
-        public final String content;
-        public final String details;
+        public final String name;
+        public final String description;
 
-        public CommunityItem(String id, String content, String details) {
+        public CommunityItem(String id, String name, String description) {
             this.id = id;
-            this.content = content;
-            this.details = details;
+            this.name = name;
+            this.description = description;
         }
 
         @Override
         public String toString() {
-            return content;
+            return name;
         }
     }
 }

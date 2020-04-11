@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.visum.CommunityFragment.OnListFragmentInteractionListener;
+import com.visum.community.CommunityContent;
 import com.visum.community.CommunityContent.CommunityItem;
 
 import java.util.List;
@@ -20,11 +21,9 @@ import java.util.List;
  */
 public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<CommunityRecyclerViewAdapter.ViewHolder> {
 
-    private final List<CommunityItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public CommunityRecyclerViewAdapter(List<CommunityItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public CommunityRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
         mListener = listener;
     }
 
@@ -36,9 +35,10 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        List<CommunityItem> mValues = CommunityContent.getItems();
         holder.mItem = mValues.get(position);
         holder.vName.setText(mValues.get(position).id);
-        holder.vDescription.setText(mValues.get(position).content);
+        holder.vDescription.setText(mValues.get(position).name);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return CommunityContent.getItems().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

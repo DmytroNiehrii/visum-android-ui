@@ -66,7 +66,7 @@ public class CommunityFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new CommunityRecyclerViewAdapter(CommunityContent.ITEMS, mListener));
+            recyclerView.setAdapter(new CommunityRecyclerViewAdapter(mListener));
         }
         return view;
     }
