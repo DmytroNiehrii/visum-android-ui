@@ -35,7 +35,7 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        List<CommunityItem> mValues = CommunityContent.getItems();
+        List<CommunityItem> mValues = CommunityContent.getInstance().getItems();
         holder.mItem = mValues.get(position);
         holder.vName.setText(mValues.get(position).id);
         holder.vDescription.setText(mValues.get(position).name);
@@ -54,7 +54,7 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
 
     @Override
     public int getItemCount() {
-        return CommunityContent.getItems().size();
+        return CommunityContent.getInstance().getItems().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
