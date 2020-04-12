@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.visum.community.CommunityRecyclerViewAdapter;
+import com.visum.dto.OutCommunityDto;
 import com.visum.dto.OutCommunityShortDto;
+import com.visum.listener.CommunityUpdateListener;
 import com.visum.util.scroll.EndlessRecyclerViewScrollListener;
 
 public class CommunityFragment extends Fragment {
@@ -27,7 +29,7 @@ public class CommunityFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static CommunityFragment newInstance(int columnCount) {
+    public static CommunityFragment newInstance() {
         CommunityFragment fragment = new CommunityFragment();
         Bundle args = new Bundle();
         //args.putInt(ARG_COLUMN_COUNT, columnCount);

@@ -6,4 +6,5 @@
     <integer name="page_size">10</integer>
 
     <string name="api_uri_get_community_list">community</string>
+    <string name="api_uri_get_community_item">community</string>
 </resources>

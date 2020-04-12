@@ -14,11 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.visum.dto.OutCommunityShortDto;
+import com.visum.listener.CommunityUpdateListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CommunityFragment.OnListFragmentInteractionListener
 {
+
+    private static final int COMMUNITY_CARD_ACTIVITY_REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_public_community:
-                fragment = CommunityFragment.newInstance(1);
+                fragment = CommunityFragment.newInstance();
                 break;
             case R.id.nav_my_groups:
                 //fragment = SentItemsFragment.newInstance();
@@ -92,6 +95,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(OutCommunityShortDto item) {
-        System.out.println(String.format("Item '%s' iterated", item.getName()));
+        Intent intent = new Intent(this, CommunityCardActivity.class);
+        intent.putExtra(CommunityCardActivity.EXTRA_COMMUNITY_ID, item.getId());
+        intent.putExtra(CommunityCardActivity.EXTRA_EDIT_MODE, false);
+
+        //startActivity(intent);
+        startActivityForResult(intent, COMMUNITY_CARD_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COMMUNITY_CARD_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                // get String data from Intent
+                String returnString = data.getStringExtra(Intent.EXTRA_TEXT);
+
+            }
+        }
     }
 }

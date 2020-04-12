@@ -11,14 +11,24 @@ import android.widget.TextView;
 import com.visum.CommunityFragment.OnListFragmentInteractionListener;
 import com.visum.R;
 import com.visum.api.CommunityApi;
-import com.visum.api.CommunityPageResponseHandler;
+import com.visum.api.handler.CommunityPageResponseHandler;
+import com.visum.dto.OutCommunityDto;
 import com.visum.dto.OutCommunityShortDto;
+import com.visum.listener.CommunityUpdateListener;
+import com.visum.util.conversion.ConversionServiceFactory;
 import com.visum.util.page.response.Page;
+
+import org.springframework.core.convert.ConversionService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<CommunityRecyclerViewAdapter.ViewHolder> {
+public class CommunityRecyclerViewAdapter
+        extends RecyclerView.Adapter<CommunityRecyclerViewAdapter.ViewHolder>
+        implements CommunityUpdateListener {
+
+    private ConversionService conversionService = ConversionServiceFactory.getInstance();
 
     private List<OutCommunityShortDto> items = new ArrayList();
     private Page<OutCommunityShortDto> lastLoadedPage;
@@ -69,6 +79,20 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
         return items == null ? 0 : items.size();
     }
 
+    @Override
+    public void onCommunityUpdate(OutCommunityDto dto) {
+        Optional<OutCommunityShortDto> foundCommunity = this.items.stream()
+                .filter(item -> item.getId().equals(dto.getId()))
+                .findFirst();
+        if (foundCommunity.isPresent()) {
+            // Update community in list
+            foundCommunity.get().pushValues(dto);
+        } else {
+            // Add community to list
+            this.items.add(conversionService.convert(dto, OutCommunityShortDto.class));
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final CardView cardView;
@@ -79,7 +103,7 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
         public ViewHolder(@NonNull CardView view) {
             super(view);
             cardView = view;
-            vName = (TextView) view.findViewById(R.id.community_name);
+            vName = (TextView) view.findViewById(R.id.name);
             vDescription = (TextView) view.findViewById(R.id.community_description);
         }
 
