@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_host">192.168.0.107</string>
+    <string name="api_port">8040</string>
+
+    <integer name="page_size">10</integer>
+
+    <string name="api_uri_get_community_list">community</string>
+</resources>

@@ -1,4 +1,4 @@
-package com.visum;
+package com.visum.community;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -9,22 +9,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.visum.CommunityFragment.OnListFragmentInteractionListener;
-import com.visum.community.CommunityContent;
-import com.visum.community.CommunityContent.CommunityItem;
+import com.visum.R;
+import com.visum.api.CommunityApi;
+import com.visum.api.CommunityPageResponseHandler;
+import com.visum.dto.OutCommunityShortDto;
+import com.visum.util.page.response.Page;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link CommunityItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<CommunityRecyclerViewAdapter.ViewHolder> {
 
+    private List<OutCommunityShortDto> items = new ArrayList();
+    private Page<OutCommunityShortDto> lastLoadedPage;
     private final OnListFragmentInteractionListener mListener;
 
     public CommunityRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
         mListener = listener;
+        pullData();
+    }
+
+    public void pullData() {
+        CommunityApi.getCommunityPage(new CommunityPageResponseHandler() {
+            @Override
+            public void handle(Page<OutCommunityShortDto> page) {
+                lastLoadedPage = page;
+                items.addAll(page.getContent());
+                notifyItemRangeChanged(0, items.size());
+            }
+        }, CommunityApi.getPageableRequest(lastLoadedPage == null ? 0 : lastLoadedPage.getNumber() + 1));
     }
 
     @Override
@@ -35,10 +48,9 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        List<CommunityItem> mValues = CommunityContent.getItems();
-        holder.mItem = mValues.get(position);
-        holder.vName.setText(mValues.get(position).id);
-        holder.vDescription.setText(mValues.get(position).name);
+        holder.mItem = items.get(position);
+        holder.vName.setText( holder.mItem.getName());
+        holder.vDescription.setText(items.get(position).getDescription());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +66,7 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
 
     @Override
     public int getItemCount() {
-        return CommunityContent.getItems().size();
+        return items == null ? 0 : items.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +74,7 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
         private final CardView cardView;
         public final TextView vName;
         public final TextView vDescription;
-        public CommunityItem mItem;
+        public OutCommunityShortDto mItem;
 
         public ViewHolder(@NonNull CardView view) {
             super(view);
@@ -75,5 +87,9 @@ public class CommunityRecyclerViewAdapter extends RecyclerView.Adapter<Community
         public String toString() {
             return super.toString() + " '" + vName.getText() + "'";
         }
+    }
+
+    public void loadNextDataFromApi(int offset) {
+        pullData();
     }
 }
