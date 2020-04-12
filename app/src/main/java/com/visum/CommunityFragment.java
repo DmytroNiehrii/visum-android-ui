@@ -3,31 +3,20 @@ package com.visum;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.visum.community.CommunityContent;
 import com.visum.community.CommunityRecyclerViewAdapter;
-import com.visum.dto.OutCommunityDto;
-//import com.visum.community.CommunityContent.CommunityItem;
+import com.visum.dto.OutCommunityShortDto;
+import com.visum.util.scroll.EndlessRecyclerViewScrollListener;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class CommunityFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private CommunityRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -41,7 +30,7 @@ public class CommunityFragment extends Fragment {
     public static CommunityFragment newInstance(int columnCount) {
         CommunityFragment fragment = new CommunityFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        //args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +40,7 @@ public class CommunityFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            //mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
 
@@ -63,16 +52,20 @@ public class CommunityFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new CommunityRecyclerViewAdapter(mListener));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            adapter = new CommunityRecyclerViewAdapter(mListener);
+            recyclerView.setAdapter(adapter);
+            EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener((LinearLayoutManager) recyclerView.getLayoutManager()) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    adapter.loadNextDataFromApi(page);
+                }
+            };
+            recyclerView.addOnScrollListener(scrollListener);
         }
+
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -91,12 +84,6 @@ public class CommunityFragment extends Fragment {
         mListener = null;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        CommunityContent.getInstance().getDataFromApi();
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -109,6 +96,6 @@ public class CommunityFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(OutCommunityDto item);
+        void onListFragmentInteraction(OutCommunityShortDto item);
     }
 }
