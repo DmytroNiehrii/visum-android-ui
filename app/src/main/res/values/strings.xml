@@ -27,4 +27,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_community_name">Enter community name</string>
+    <string name="hint_community_description">Enter community description</string>
+    <string name="api_uri_put_community">community</string>
+    <string name="community_updated">Community updated</string>
 </resources>

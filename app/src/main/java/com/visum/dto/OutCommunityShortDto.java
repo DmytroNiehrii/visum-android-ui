@@ -19,4 +19,10 @@ public class OutCommunityShortDto {
     private Timestamp lastUpdateAt;
     private String name;
     private String description;
+
+    public void pushValues(OutCommunityDto dto) {
+        this.lastUpdateAt = dto.getLastUpdateAt();
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+    }
 }
