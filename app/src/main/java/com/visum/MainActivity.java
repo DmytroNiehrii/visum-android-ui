@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.visum.dto.OutCommunityShortDto;
-import com.visum.listener.CommunityUpdateListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -95,12 +94,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(OutCommunityShortDto item) {
-        Intent intent = new Intent(this, CommunityCardActivity.class);
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, CommunityCardFragment.getInstance(item.getId(), false));
+        ft.commit();
+
+
+        /*Intent intent = new Intent(this, CommunityCardActivity.class);
         intent.putExtra(CommunityCardActivity.EXTRA_COMMUNITY_ID, item.getId());
         intent.putExtra(CommunityCardActivity.EXTRA_EDIT_MODE, false);
 
-        //startActivity(intent);
-        startActivityForResult(intent, COMMUNITY_CARD_ACTIVITY_REQUEST_CODE);
+        startActivity(intent);*/
     }
 
     @Override

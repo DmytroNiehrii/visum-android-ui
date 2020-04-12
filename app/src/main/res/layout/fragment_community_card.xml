@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CommunityCardActivity">
+    tools:context=".CommunityCardFragment">
 
     <AutoCompleteTextView
         android:id="@+id/community_card_name"
@@ -33,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/community_card_name" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -45,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:onClick="onClickCancel"
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
@@ -55,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:onClick="onClickEdit"
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_menu_edit" />
 
@@ -65,7 +64,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:onClick="onClickSave"
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_menu_save" />
 

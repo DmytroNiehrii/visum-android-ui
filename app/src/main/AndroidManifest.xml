@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CommunityCardActivity"></activity>
         <activity android:name=".FeedbackActivity" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".MainActivity">
